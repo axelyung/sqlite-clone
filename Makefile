@@ -1,5 +1,13 @@
-db: main.c
-	gcc main.c -o db.o
+CC=gcc
+CFLAGS=-I.
+DEPS = input.h
+OBJ = main.o input.o
+
+%.o: %.c $(DEPS)
+	$(CC) -c -o $@ $< $(CFLAGS)
+
+db: $(OBJ)
+	$(CC) -o $@.o $^ $(CFLAGS)
 
 run: db
 	./db.o mydb.db
