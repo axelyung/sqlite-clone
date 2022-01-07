@@ -15,8 +15,5 @@ run: db
 clean:
 	rm -f db.o *.db
 
-test: db
-	bundle exec rspec
-
 format: *.c
 	clang-format -style=Google -i *.c
