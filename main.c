@@ -3,11 +3,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-typedef struct {
-  char* buffer;
-  size_t buffer_length;
-  ssize_t input_length;
-} InputBuffer;
+#include "./input.h"
 
 typedef enum { EXECUTE_SUCCESS, EXECUTE_TABLE_FULL } ExecuteResult;
 typedef enum {
@@ -77,19 +73,6 @@ void* row_slot(Table* table, uint32_t row_num) {
   uint32_t row_offset = row_num % ROWS_PER_PAGE;
   uint32_t byte_offset = row_offset * ROW_SIZE;
   return page + byte_offset;
-}
-
-InputBuffer* new_input_buffer() {
-  InputBuffer* input_buffer = malloc(sizeof(InputBuffer));
-  input_buffer->buffer = NULL;
-  input_buffer->buffer_length = 0;
-  input_buffer->input_length = 0;
-  return input_buffer;
-}
-
-void close_input_buffer(InputBuffer* input_buffer) {
-  free(input_buffer->buffer);
-  free(input_buffer);
 }
 
 MetaCommandResult do_meta_command(InputBuffer* input_buffer) {
